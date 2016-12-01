@@ -1,6 +1,7 @@
 package com.example.guest.moviesearch.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +11,10 @@ import android.widget.TextView;
 
 import com.example.guest.moviesearch.Models.MovieModel;
 import com.example.guest.moviesearch.R;
+import com.example.guest.moviesearch.UI.MovieDetailActivity;
 import com.squareup.picasso.Picasso;
+
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 
@@ -48,7 +52,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
         return mMovieModel.size();
     }
 
-    public class MovieViewHolder extends RecyclerView.ViewHolder {
+    public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @Bind(R.id.moviePoster) ImageView mMoviePoster;
         @Bind(R.id.movieTitle) TextView mMovieTitle;
         @Bind(R.id.movieOverview) TextView mMovieOverview;
@@ -60,6 +64,17 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
             super(itemView);
             ButterKnife.bind(this, itemView);
             mContext = itemView.getContext();
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            int itemPosition = getLayoutPosition();
+            Intent intent = new Intent(mContext, MovieDetailActivity.class);
+            intent.putExtra("position", itemPosition);
+            intent.putExtra("movies", Parcels.wrap(mMovieModel));
+            mContext.startActivity(intent);
+
         }
 
         public void bindMovies(MovieModel movie) {
