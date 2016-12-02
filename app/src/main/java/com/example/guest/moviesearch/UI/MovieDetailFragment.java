@@ -1,6 +1,8 @@
 package com.example.guest.moviesearch.UI;
 
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -58,6 +60,13 @@ public class MovieDetailFragment extends Fragment {
         mMovieTitle.setText(mMovie.mTitle);
         mRating.setText(mMovie.mVoteAvg);
         mWebsiteView.setText("https://www.themoviedb.org/");
+        mWebsiteView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent webIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.themoviedb.org/"));
+                startActivity(webIntent);
+            }
+        });
         mMovieOverview.setText(mMovie.mOverview);
         return view;
     }
